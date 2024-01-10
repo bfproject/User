@@ -32,6 +32,8 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
+
     implementation "com.google.dagger:hilt-android:${versions.hiltAndroid}"
     kapt "com.google.dagger:hilt-compiler:${versions.hiltAndroid}"
 

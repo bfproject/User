@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    implementation project(":core")
+    implementation project (":data-repository")
 
     implementation "androidx.core:core-ktx:${versions.coreKtx}"
     implementation "androidx.activity:activity-compose:${versions.activityCompose}"

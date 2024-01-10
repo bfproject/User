@@ -49,6 +49,7 @@ android {
 }
 
 dependencies {
+    implementation project(":feature-users")
 
     implementation "androidx.core:core-ktx:${versions.coreKtx}"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:${versions.lifecycle}"
