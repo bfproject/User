@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "User"
 include ':app'
 include ':data-remote'
+include ':data-repository'
