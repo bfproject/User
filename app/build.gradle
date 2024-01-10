@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.architecture.user'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.architecture.user"
