@@ -14,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.architecture.core.navigation.NavRoutes
-import com.architecture.feature_users.UserListScreen
+import com.architecture.feature_users.list.UserListScreen
 import com.architecture.user.ui.theme.UserTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.architecture.feature_users
+package com.architecture.feature_users.list
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
