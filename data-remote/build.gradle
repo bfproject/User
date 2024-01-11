@@ -42,6 +42,14 @@ dependencies {
     implementation "com.google.dagger:hilt-android:${versions.hiltAndroid}"
     kapt "com.google.dagger:hilt-compiler:${versions.hiltAndroid}"
 
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-moshi:${versions.retrofit}"
+    implementation "com.squareup.moshi:moshi:${versions.moshi}"
+    implementation "com.squareup.moshi:moshi-kotlin:${versions.moshi}"
+    implementation (platform("com.squareup.okhttp3:okhttp-bom:${versions.okhttp}"))
+    implementation "com.squareup.okhttp3:okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor"
+
     testImplementation "junit:junit:${versions.junit}"
 }
 
