@@ -6,6 +6,7 @@ buildscript {
             'hiltAndroid' : '2.45',
             'junit' : '4.13.2',
             'junitAndroid' : '1.1.5',
+            'kotlinxCoroutinesCore': '1.8.0-RC2',
             'lifecycle' : '2.6.2',
             'moshi' : '1.14.0',
             'okhttp' : '4.10.0',
