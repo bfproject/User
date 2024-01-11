@@ -13,12 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.architecture.core.model.User
 import com.architecture.core.state.UiState
 
 @Composable
-fun UserListScreen(viewModel: UserViewModel = viewModel()) {
+fun UserListScreen(viewModel: UserViewModel) {
 
     viewModel.uiStateFlow.collectAsStateWithLifecycle().value.let {
         when (it) {
