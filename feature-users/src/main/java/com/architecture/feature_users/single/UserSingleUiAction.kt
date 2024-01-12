@@ -4,6 +4,10 @@ import com.architecture.core.state.UiAction
 
 sealed class UserSingleUiAction : UiAction {
 
-    object Load: UserSingleUiAction()
+    data class Load(
+        val userName: String,
+        val email: String,
+        val picture: String
+    ) : UserSingleUiAction()
 
 }

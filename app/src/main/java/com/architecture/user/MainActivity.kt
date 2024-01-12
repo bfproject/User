@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.architecture.core.navigation.NavRoutes
 import com.architecture.feature_users.list.UserListScreen
+import com.architecture.feature_users.single.UserScreen
 import com.architecture.user.ui.theme.UserTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +38,13 @@ class MainActivity : ComponentActivity() {
 fun App(navController: NavHostController) {
     NavHost(navController, startDestination = NavRoutes.Users.route) {
         composable(route = NavRoutes.Users.route) {
-            UserListScreen(hiltViewModel())
+            UserListScreen(hiltViewModel(), navController)
+        }
+        composable(
+            route = NavRoutes.User.route,
+            arguments = NavRoutes.User.arguments
+        ) {
+            UserScreen(hiltViewModel(), NavRoutes.User.fromEntry(it))
         }
     }
 }

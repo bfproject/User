@@ -35,7 +35,7 @@ class UserSingleViewModel @Inject constructor() :  ViewModel() {
     private fun handleAction(action: UserSingleUiAction) {
         when (action) {
             is UserSingleUiAction.Load -> {
-                loadUser()
+                loadUser(action.userName, action.email, action.picture)
             }
         }
     }
@@ -46,9 +46,8 @@ class UserSingleViewModel @Inject constructor() :  ViewModel() {
         }
     }
 
-    private fun loadUser() {
-        // TODO: load clicked data
-        submitState(UiState.Success(User("email", "name", "url")))
+    private fun loadUser(userName: String, email: String, picture: String) {
+        submitState(UiState.Success(User(email, userName, picture)))
     }
 
 }
