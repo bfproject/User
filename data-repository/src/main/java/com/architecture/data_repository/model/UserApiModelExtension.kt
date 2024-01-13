@@ -6,5 +6,5 @@ import com.architecture.data_remote.api.UserApiModel
 fun UserApiModel.asUiModel() = User(
     email = email,
     name = "${name.first} ${name.last}",
-    picture = picture.thumbnail
+    picture = picture.medium
 )
