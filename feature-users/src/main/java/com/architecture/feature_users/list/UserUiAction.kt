@@ -9,4 +9,6 @@ sealed class UserUiAction: UiAction {
 
     data class UserClick(val user: User) : UserUiAction()
 
+    data class Search(val query: String) : UserUiAction()
+
 }

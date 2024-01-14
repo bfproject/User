@@ -1,7 +1,6 @@
 package com.architecture.feature_users.list
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -43,10 +42,6 @@ fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
     val state = viewModel.uiStateFlow.collectAsStateWithLifecycle().value
 
     LaunchedEffect(Unit) {
-        viewModel.submitAction(UserUiAction.Load)
-    }
-
-    LaunchedEffect(Unit) {
         viewModel.singleEventFlow.collectLatest {
             when (it) {
                 is UserListUiSingleEvent.OpenUserScreen -> {
@@ -56,9 +51,15 @@ fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
         }
     }
 
-    UserMainView(state) {
-        viewModel.submitAction(UserUiAction.UserClick(it))
-    }
+    UserMainView(
+        state = state,
+        onUserClick = {
+            viewModel.submitAction(UserUiAction.UserClick(it))
+        },
+        onValueChange = {
+            viewModel.submitAction(UserUiAction.Search(it))
+        }
+    )
 
 }
 
@@ -67,18 +68,26 @@ fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
 fun UserMainView(
     state: UiState<List<User>>,
     onUserClick: (User) -> Unit,
+    onValueChange: (String) -> Unit,
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(
-                text = stringResource(id = R.string.user_list_screen_title).uppercase(),
-                fontWeight = FontWeight.Bold
-            ) })
+            TopAppBar(title = {
+                Text(
+                    text = stringResource(id = R.string.user_list_screen_title).uppercase(),
+                    fontWeight = FontWeight.Bold
+                )
+            })
         },
         content = {
-            Box(
+            Column(
                 modifier = Modifier.padding(it),
             ) {
+                SearchBox(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    onValueChange = onValueChange,
+                )
                 UserListContent(state, onUserClick)
             }
         }
