@@ -15,7 +15,9 @@ class UserRepositoryImpl @Inject constructor(private val userNetworkDataSource: 
 
     override fun getUserList(): Flow<DataState<List<User>>> = flow {
         try {
-            val userList = userNetworkDataSource.getAssetList().results.map(UserApiModel::asUiModel)
+            val userList = userNetworkDataSource.getAssetList().results
+                .distinctBy { it.email }
+                .map(UserApiModel::asUiModel)
             emit(DataState.Success(userList))
         } catch (e: Exception) {
             println(e.message)
