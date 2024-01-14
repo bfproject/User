@@ -42,10 +42,6 @@ fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
     val state = viewModel.uiStateFlow.collectAsStateWithLifecycle().value
 
     LaunchedEffect(Unit) {
-        viewModel.submitAction(UserUiAction.Load)
-    }
-
-    LaunchedEffect(Unit) {
         viewModel.singleEventFlow.collectLatest {
             when (it) {
                 is UserListUiSingleEvent.OpenUserScreen -> {

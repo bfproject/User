@@ -36,6 +36,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
                 handleAction(it)
             }
         }
+        submitAction(UserUiAction.Load)
     }
 
     fun submitAction(action: UserUiAction) {
