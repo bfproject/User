@@ -61,7 +61,7 @@ fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
             viewModel.submitAction(UserUiAction.UserClick(it))
         },
         onValueChange = {
-            // TODO: Implement search
+            viewModel.submitAction(UserUiAction.Search(it))
         }
     )
 

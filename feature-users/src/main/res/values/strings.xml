@@ -3,5 +3,5 @@
     <string name="user_name_title">Name and surnames</string>
     <string name="user_email_title">Email</string>
     <string name="search_box_content_description">Search</string>
-    <string name="search_box_placeholder">Search by name</string>
+    <string name="search_box_placeholder">Search by name or email</string>
 </resources>
