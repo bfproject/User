@@ -1,3 +1,5 @@
 <resources>
     <string name="user_list_screen_title">Users</string>
+    <string name="user_name_title">Name and surnames</string>
+    <string name="user_email_title">Email</string>
 </resources>
