@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -111,7 +112,7 @@ fun UserSection(
     onUserClick: (User) -> Unit,
 ) {
     when (lazyPagingUserItems.loadState.refresh) {
-        is LoadState.Loading -> CustomCircularProgressIndicator()
+        is LoadState.Loading -> CustomCircularProgressIndicator(Modifier.fillMaxHeight())
         is LoadState.Error -> {} // TODO()
         is LoadState.NotLoading -> {} // TODO()
     }
