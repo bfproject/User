@@ -2,17 +2,19 @@ package com.architecture.feature_users.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.architecture.core.model.User
 import com.architecture.core.navigation.NavRoutes
 import com.architecture.core.navigation.UserInput
 import com.architecture.core.repository.UserRepository
-import com.architecture.core.state.DataState
 import com.architecture.core.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import javax.inject.Inject
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -27,6 +29,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
     private val actionFlow: MutableSharedFlow<UserUiAction> = MutableSharedFlow()
     private val _singleEventFlow = Channel<UserListUiSingleEvent>()
     val singleEventFlow = _singleEventFlow.receiveAsFlow()
+    val pagingDataFlow: Flow<PagingData<User>>
 
     private var userListToSearch = listOf<User>()
 
@@ -36,6 +39,10 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
                 handleAction(it)
             }
         }
+
+        pagingDataFlow = userRepository.getUserList()
+            .cachedIn(viewModelScope)
+
         submitAction(UserUiAction.Load)
     }
 
@@ -75,7 +82,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         var result = listOf<User>()
         if (userListToSearch.isNotEmpty()) {
             result = userListToSearch
-                .filter { it.name.contains(query, ignoreCase = true)  || it.email.contains(query, ignoreCase = true) }
+                .filter { it.name.contains(query, ignoreCase = true) || it.email.contains(query, ignoreCase = true) }
         }
         submitState(UiState.Success(result))
     }
@@ -87,16 +94,17 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
     }
 
     private fun loadUserList() {
-        viewModelScope.launch {
-            userRepository.getUserList().collect {
-                when (it) {
-                    is DataState.Success -> {
-                        userListToSearch = it.data
-                        submitState(UiState.Success(it.data))
-                    }
-                }
-            }
-        }
+        // Done on init
+//        viewModelScope.launch {
+//            userRepository.getUserList().collect {
+//                when (it) {
+//                    is DataState.Success -> {
+//                        userListToSearch = it.data
+//                        submitState(UiState.Success(it.data))
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun submitSingleEvent(event: UserListUiSingleEvent) {

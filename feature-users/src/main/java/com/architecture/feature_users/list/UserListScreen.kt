@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -30,6 +29,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.architecture.core.model.User
 import com.architecture.core.state.UiState
 import com.architecture.feature_users.R
@@ -40,6 +42,7 @@ import kotlinx.coroutines.flow.collectLatest
 fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
 
     val state = viewModel.uiStateFlow.collectAsStateWithLifecycle().value
+    val lazyPagingUserItems = viewModel.pagingDataFlow.collectAsLazyPagingItems()
 
     LaunchedEffect(Unit) {
         viewModel.singleEventFlow.collectLatest {
@@ -53,13 +56,13 @@ fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
 
     UserMainView(
         state = state,
+        lazyPagingUserItems = lazyPagingUserItems,
         onUserClick = {
             viewModel.submitAction(UserUiAction.UserClick(it))
-        },
-        onValueChange = {
-            viewModel.submitAction(UserUiAction.Search(it))
         }
-    )
+    ) {
+        viewModel.submitAction(UserUiAction.Search(it))
+    }
 
 }
 
@@ -67,6 +70,7 @@ fun UserListScreen(viewModel: UserViewModel, navController: NavController) {
 @Composable
 fun UserMainView(
     state: UiState<List<User>>,
+    lazyPagingUserItems: LazyPagingItems<User>,
     onUserClick: (User) -> Unit,
     onValueChange: (String) -> Unit,
 ) {
@@ -88,7 +92,11 @@ fun UserMainView(
                         .fillMaxWidth(),
                     onValueChange = onValueChange,
                 )
-                UserListContent(state, onUserClick)
+                UserListContent(
+                    state = state,
+                    lazyPagingUserItems = lazyPagingUserItems,
+                    onUserClick = onUserClick,
+                )
             }
         }
     )
@@ -97,19 +105,14 @@ fun UserMainView(
 @Composable
 fun UserListContent(
     state: UiState<List<User>>,
+    lazyPagingUserItems: LazyPagingItems<User>,
     onUserClick: (User) -> Unit,
 ) {
-    state.let {
-        when (it) {
-            is UiState.Success -> {
-                LazyColumn {
-                    items(it.data) { item ->
-                        UserListItem(item, onUserClick)
-                    }
-                }
+    LazyColumn {
+        items(items = lazyPagingUserItems) {user ->
+            user?.let {
+                UserListItem(it, onUserClick)
             }
-
-            else -> {}
         }
     }
 }

@@ -8,9 +8,8 @@ import kotlinx.coroutines.withContext
 
 class UserNetworkDataSourceImpl @Inject constructor(private val userService: UserService) : UserNetworkDataSource {
 
-    override suspend fun getAssetList(): UserListApiModel = withContext(Dispatchers.IO) {
-        userService.getUserList()
+    override suspend fun getAssetList(page: Int, results: Int): UserListApiModel = withContext(Dispatchers.IO) {
+        userService.getUserList(page, results)
     }
-
 
 }

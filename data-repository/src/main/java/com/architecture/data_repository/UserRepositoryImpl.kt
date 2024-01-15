@@ -1,28 +1,25 @@
 package com.architecture.data_repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.architecture.core.model.User
 import com.architecture.core.repository.UserRepository
-import com.architecture.core.state.DataState
-import com.architecture.data_remote.api.UserApiModel
 import com.architecture.data_remote.source.UserNetworkDataSource
-import com.architecture.data_repository.model.asUiModel
+import com.architecture.data_repository.pagingsource.SearchPagingSource
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 class UserRepositoryImpl @Inject constructor(private val userNetworkDataSource: UserNetworkDataSource) :
     UserRepository {
 
-    override fun getUserList(): Flow<DataState<List<User>>> = flow {
-        try {
-            val userList = userNetworkDataSource.getAssetList().results
-                .distinctBy { it.email }
-                .map(UserApiModel::asUiModel)
-            emit(DataState.Success(userList))
-        } catch (e: Exception) {
-            println(e.message)
-            // TODO: handle errors
-        }
+    override fun getUserList(): Flow<PagingData<User>> {
+        val pageSize = 20
+
+        return Pager(
+            config = PagingConfig(pageSize = pageSize),
+            pagingSourceFactory = { SearchPagingSource(userNetworkDataSource, pageSize) }
+        ).flow
     }
 
 }
