@@ -29,12 +29,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.architecture.core.model.User
 import com.architecture.core.state.UiState
 import com.architecture.feature_users.R
+import com.architecture.feature_users.common.CustomCircularProgressIndicator
 import com.architecture.feature_users.common.CustomImage
 import kotlinx.coroutines.flow.collectLatest
 
@@ -92,7 +94,7 @@ fun UserMainView(
                         .fillMaxWidth(),
                     onValueChange = onValueChange,
                 )
-                UserListContent(
+                UserSection(
                     state = state,
                     lazyPagingUserItems = lazyPagingUserItems,
                     onUserClick = onUserClick,
@@ -103,15 +105,41 @@ fun UserMainView(
 }
 
 @Composable
+fun UserSection(
+    state: UiState<List<User>>,
+    lazyPagingUserItems: LazyPagingItems<User>,
+    onUserClick: (User) -> Unit,
+) {
+    when (lazyPagingUserItems.loadState.refresh) {
+        is LoadState.Loading -> CustomCircularProgressIndicator()
+        is LoadState.Error -> {} // TODO()
+        is LoadState.NotLoading -> {} // TODO()
+    }
+
+    UserListContent(
+        state = state,
+        lazyPagingUserItems = lazyPagingUserItems,
+        onUserClick = onUserClick,
+    )
+}
+
+@Composable
 fun UserListContent(
     state: UiState<List<User>>,
     lazyPagingUserItems: LazyPagingItems<User>,
     onUserClick: (User) -> Unit,
 ) {
     LazyColumn {
-        items(items = lazyPagingUserItems) {user ->
+        items(items = lazyPagingUserItems) { user ->
             user?.let {
                 UserListItem(it, onUserClick)
+            }
+        }
+
+        // Load circular progress indicator when loading more elements
+        if (lazyPagingUserItems.loadState.append == LoadState.Loading) {
+            item {
+                CustomCircularProgressIndicator()
             }
         }
     }
