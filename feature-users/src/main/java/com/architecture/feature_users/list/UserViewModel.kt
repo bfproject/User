@@ -88,6 +88,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
 
     private fun loadUserList() {
         viewModelScope.launch {
+            submitState(UiState.Loading)
             userRepository.getUserList().collect {
                 when (it) {
                     is DataState.Success -> {

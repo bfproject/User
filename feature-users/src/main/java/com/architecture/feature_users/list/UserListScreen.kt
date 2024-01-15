@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,6 +34,7 @@ import androidx.navigation.NavController
 import com.architecture.core.model.User
 import com.architecture.core.state.UiState
 import com.architecture.feature_users.R
+import com.architecture.feature_users.common.CustomCircularProgressIndicator
 import com.architecture.feature_users.common.CustomImage
 import kotlinx.coroutines.flow.collectLatest
 
@@ -109,7 +111,7 @@ fun UserListContent(
                 }
             }
 
-            else -> {}
+            is UiState.Loading -> CustomCircularProgressIndicator(modifier = Modifier.fillMaxHeight())
         }
     }
 }

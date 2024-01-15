@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CustomCircularProgressIndicator(modifier: Modifier) {
+fun CustomCircularProgressIndicator(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxWidth(),
         contentAlignment = Alignment.Center) {
         CircularProgressIndicator(
@@ -29,5 +29,5 @@ fun CustomCircularProgressIndicator(modifier: Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun ProgressIndicatorPreview() {
-    CustomCircularProgressIndicator(modifier = Modifier)
+    CustomCircularProgressIndicator()
 }
