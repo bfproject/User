@@ -10,10 +10,12 @@ buildscript {
             'junitAndroid' : '1.1.5',
             'kotlinxCoroutinesCore': '1.8.0-RC2',
             'lifecycle' : '2.6.2',
+            'mockito' : '4.0.0',
             'moshi' : '1.14.0',
             'navigationCompose' : '2.7.6',
             'okhttp' : '4.10.0',
-            'retrofit' : '2.9.0'
+            'retrofit' : '2.9.0',
+            'turbine' : '1.0.0'
     ]
 }
 
