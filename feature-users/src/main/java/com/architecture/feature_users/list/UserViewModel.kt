@@ -8,6 +8,7 @@ import com.architecture.core.navigation.UserInput
 import com.architecture.core.repository.UserRepository
 import com.architecture.core.state.DataState
 import com.architecture.core.state.UiState
+import com.architecture.core.state.asUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -95,6 +96,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
                         userListToSearch = it.data
                         submitState(UiState.Success(it.data))
                     }
+                    is DataState.Error -> submitState(it.asUiState())
                 }
             }
         }

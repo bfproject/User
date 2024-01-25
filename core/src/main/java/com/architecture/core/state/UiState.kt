@@ -9,4 +9,10 @@ sealed class UiState<out T : Any> {
 
     data class Success<T : Any>(val data: T) : UiState<T>()
 
+    sealed class Error(val errorMsg: String) : UiState<Nothing>() {
+        class NoConnection(errorMessage: String) : Error(errorMessage)
+        class Http(errorMessage: String) : Error(errorMessage)
+        class Generic(errorMessage: String) : Error(errorMessage)
+    }
+
 }

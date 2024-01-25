@@ -112,6 +112,9 @@ fun UserListContent(
             }
 
             is UiState.Loading -> CustomCircularProgressIndicator(modifier = Modifier.fillMaxHeight())
+            is UiState.Error.Generic -> TODO()
+            is UiState.Error.Http -> TODO()
+            is UiState.Error.NoConnection -> TODO()
         }
     }
 }
