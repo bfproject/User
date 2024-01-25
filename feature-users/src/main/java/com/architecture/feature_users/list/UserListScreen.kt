@@ -35,6 +35,7 @@ import com.architecture.core.model.User
 import com.architecture.core.state.UiState
 import com.architecture.feature_users.R
 import com.architecture.feature_users.common.CustomCircularProgressIndicator
+import com.architecture.feature_users.common.CustomEmptyOrErrorState
 import com.architecture.feature_users.common.CustomImage
 import kotlinx.coroutines.flow.collectLatest
 
@@ -104,17 +105,35 @@ fun UserListContent(
     state.let {
         when (it) {
             is UiState.Success -> {
-                LazyColumn {
-                    items(it.data) { item ->
-                        UserListItem(item, onUserClick)
+                if (it.data.isNotEmpty()) {
+                    LazyColumn {
+                        items(it.data) { item ->
+                            UserListItem(item, onUserClick)
+                        }
                     }
+                } else {
+                    CustomEmptyOrErrorState(
+                        drawableResId = R.drawable.ic_search,
+                        textResId = R.string.search_no_match
+                    )
                 }
             }
 
             is UiState.Loading -> CustomCircularProgressIndicator(modifier = Modifier.fillMaxHeight())
-            is UiState.Error.Generic -> TODO()
-            is UiState.Error.Http -> TODO()
-            is UiState.Error.NoConnection -> TODO()
+            is UiState.Error.Generic -> CustomEmptyOrErrorState(
+                drawableResId = R.drawable.ic_error,
+                textResId = R.string.error_msg_retrieving_users
+            )
+
+            is UiState.Error.Http -> CustomEmptyOrErrorState(
+                drawableResId = R.drawable.ic_error,
+                textResId = R.string.error_msg_retrieving_users
+            )
+
+            is UiState.Error.NoConnection -> CustomEmptyOrErrorState(
+                drawableResId = R.drawable.ic_error,
+                textResId = R.string.error_msg_no_connection
+            )
         }
     }
 }

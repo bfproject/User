@@ -4,4 +4,7 @@
     <string name="user_email_title">Email</string>
     <string name="search_box_content_description">Search</string>
     <string name="search_box_placeholder">Search by name or email</string>
+    <string name="search_no_match">No results found</string>
+    <string name="error_msg_no_connection">No internet connection</string>
+    <string name="error_msg_retrieving_users">It was not possible to retrieve the users</string>
 </resources>
