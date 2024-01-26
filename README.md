@@ -10,7 +10,7 @@ Screenshot
 
 The data is retrieved from https://randomuser.me/
 
-The project follows an MVI architecture. 
+The project follows an MVI architecture.
 A single activity approach is implemented.
 Multimodules are used to separate the different layers.
 
@@ -20,8 +20,9 @@ Some of the main libraries used are:
 - Hilt for dependency injection 
 - Navigation to change route view
 - Paging to retrieve and display data paginated 
-- Retrofit, okhttp and Moshi to get data from the server and map it.
+- Retrofit, okhttp and Moshi to get data from the server and map it
 - Coil to load images Asynchronously
+- Junit, Mockito and Turbine for testing
 
 
 
@@ -34,7 +35,7 @@ It is not implemented because get all the data in the user list view is a really
 
 Also, the data displayed on the detail view needs to be send from the user list. I opt for send all this data using the navigation arguments.
 
-But this is consider an anti-pattern.
+But sending all the data is consider an anti-pattern.
 
 The proper way would be collect the required data on each view.
 Then pass to the detail view only the user id.
@@ -44,5 +45,5 @@ not available for now.
 
 Similar thing happens with search. There is no search endpoint.
 
-Another point to improve is the paging the data. I create a differten brach for the paging data implementation as I was not sure how to work it together with the search.
-[Paging branch](https://github.com/bfproject/User/pull/1)
+Another point to improve is paging the data. I create a differten brach for the paging data implementation as I was not sure how to work it together with the search.
+[Paging branch](https://github.com/bfproject/User/tree/feat-paginated-data)
